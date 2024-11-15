@@ -1,4 +1,4 @@
-package com.luckgg.rmchars.ui.theme
+package com.luckgg.rmchars.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
