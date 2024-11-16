@@ -16,12 +16,15 @@ import java.io.IOException
 class CharacterRemoteMediator(
     private val characterDb: CharacterDatabase,
     private val rmApi: RMApi,
+    private val characterName: String?,
 ) : RemoteMediator<Int, CharacterEntity>() {
     override suspend fun load(
         loadType: LoadType,
         state: PagingState<Int, CharacterEntity>,
     ): MediatorResult {
         return try {
+            var response = rmApi.getCharacters(page = 1, name = characterName)
+
             val loadKey =
                 when (loadType) {
                     LoadType.REFRESH -> 1
@@ -30,17 +33,20 @@ class CharacterRemoteMediator(
                     )
                     LoadType.APPEND -> {
                         val lastItem = state.lastItemOrNull()
-
-                        if (lastItem == null || lastItem.id == 826) {
-                            0
-                        } else {
-                            (lastItem.id / state.config.pageSize) + 1
+                        lastItem?.let {
+                            if (lastItem.id == response.info.count) {
+                                return MediatorResult.Success(
+                                    endOfPaginationReached = true,
+                                )
+                            } else {
+                                (lastItem.id / state.config.pageSize) + 1
+                            }
                         }
                     }
                 }
 
-            val characters =
-                rmApi.getCharacters(page = loadKey).results
+            response = rmApi.getCharacters(page = loadKey)
+            val characters = response.results
 
             characterDb.withTransaction {
                 val characterEntities = characters.map { it.toCharacterEntity() }

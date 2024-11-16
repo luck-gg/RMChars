@@ -17,7 +17,7 @@ import javax.inject.Inject
 class CharacterViewModel
     @Inject
     constructor(
-        characterUseCase: CharacterUseCase,
+        private val characterUseCase: CharacterUseCase,
     ) : ViewModel() {
         private val _characterFlow: MutableStateFlow<PagingData<CharacterRM>> = MutableStateFlow(PagingData.empty())
         val characterFlow: StateFlow<PagingData<CharacterRM>> = _characterFlow
@@ -29,8 +29,12 @@ class CharacterViewModel
         val characters: StateFlow<List<CharacterRM>> = _characters.asStateFlow()
 
         init {
+            loadCharacters()
+        }
+
+        private fun loadCharacters(newQuery: String? = null) {
             viewModelScope.launch {
-                characterUseCase()
+                characterUseCase(newQuery)
                     .cachedIn(viewModelScope)
                     .collect {
                         _characterFlow.value = it
@@ -40,6 +44,6 @@ class CharacterViewModel
 
         fun onQueryChange(newQuery: String) {
             _query.value = newQuery
-//        loadCharacters()
+            loadCharacters(newQuery)
         }
     }

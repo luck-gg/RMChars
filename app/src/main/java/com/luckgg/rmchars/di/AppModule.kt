@@ -1,13 +1,8 @@
 package com.luckgg.rmchars.di
 
 import android.content.Context
-import androidx.paging.ExperimentalPagingApi
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
 import androidx.room.Room
 import com.luckgg.rmchars.data.local.CharacterDatabase
-import com.luckgg.rmchars.data.local.CharacterEntity
-import com.luckgg.rmchars.data.remote.CharacterRemoteMediator
 import com.luckgg.rmchars.data.remote.api.RMApi
 import com.luckgg.rmchars.data.repository.RMRepositoryImpl
 import com.luckgg.rmchars.domain.repository.RMRepository
@@ -59,33 +54,12 @@ object AppModule {
                 "beers.db",
             ).build()
 
-    @OptIn(ExperimentalPagingApi::class)
     @Provides
     @Singleton
-    fun provideCharacterPager(
-        api: RMApi,
+    fun provideRMRepository(
         database: CharacterDatabase,
-    ): Pager<Int, CharacterEntity> =
-        Pager(
-            config =
-                PagingConfig(
-                    prefetchDistance = 10,
-                    pageSize = 20,
-                    initialLoadSize = 20,
-                ),
-            remoteMediator =
-                CharacterRemoteMediator(
-                    characterDb = database,
-                    rmApi = api,
-                ),
-            pagingSourceFactory = {
-                database.dao.pagingSource()
-            },
-        )
-
-    @Provides
-    @Singleton
-    fun provideRMRepository(pager: Pager<Int, CharacterEntity>): RMRepository = RMRepositoryImpl(pager)
+        api: RMApi,
+    ): RMRepository = RMRepositoryImpl(database, api)
 
     @Provides
     @Singleton

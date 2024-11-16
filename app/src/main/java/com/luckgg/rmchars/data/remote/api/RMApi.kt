@@ -4,9 +4,10 @@ import com.luckgg.rmchars.data.remote.response.CharacterApiResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-fun interface RMApi {
+interface RMApi {
     @GET("character")
     suspend fun getCharacters(
         @Query("page") page: Int?,
+        @Query("name") name: String? = null,
     ): CharacterApiResponse
 }
