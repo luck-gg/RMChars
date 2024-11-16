@@ -1,6 +1,6 @@
 package com.luckgg.rmchars.data.remote.dto
 
-data class Location(
+data class CharacterLocationDto(
     val name: String,
     val url: String,
 )

@@ -80,10 +80,13 @@ dependencies {
     implementation(libs.coil.compose)
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)
-    // Room Database
+
+    // Interceptor
+    implementation(libs.logging.interceptor)
 
     // Materials
     implementation(libs.material)
+
     // Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)

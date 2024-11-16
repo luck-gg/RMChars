@@ -1,19 +1,15 @@
 package com.luckgg.rmchars.data.local
 
-import com.luckgg.rmchars.data.remote.dto.Location
-import com.luckgg.rmchars.data.remote.dto.Origin
+import androidx.paging.PagingSource
+import androidx.room.Dao
+import androidx.room.Query
+import androidx.room.Upsert
 
-data class CharacterDao(
-    val created: String?,
-    val episode: List<String>?,
-    val gender: String?,
-    val id: String?,
-    val image: String?,
-    val location: Location?,
-    val name: String?,
-    val origin: Origin?,
-    val species: String?,
-    val status: String?,
-    val type: String?,
-    val url: String?,
-)
+@Dao
+interface CharacterDao {
+    @Upsert
+    suspend fun upsertAll(characterEntity: List<CharacterEntity>)
+
+    @Query("SELECT * FROM characterentity")
+    fun pagingSource(): PagingSource<Int, CharacterEntity>
+}

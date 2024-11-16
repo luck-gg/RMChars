@@ -2,6 +2,8 @@ package com.luckgg.rmchars.presentation.screens
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.luckgg.rmchars.domain.model.CharacterRM
 import com.luckgg.rmchars.domain.usecase.CharacterUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +19,8 @@ class CharacterViewModel
     constructor(
         characterUseCase: CharacterUseCase,
     ) : ViewModel() {
-        private val charUseCase = characterUseCase
+        private val _characterFlow: MutableStateFlow<PagingData<CharacterRM>> = MutableStateFlow(PagingData.empty())
+        val characterFlow: StateFlow<PagingData<CharacterRM>> = _characterFlow
 
         private val _query = MutableStateFlow("")
         val query: StateFlow<String> = _query.asStateFlow()
@@ -26,18 +29,17 @@ class CharacterViewModel
         val characters: StateFlow<List<CharacterRM>> = _characters.asStateFlow()
 
         init {
-            loadCharacters()
+            viewModelScope.launch {
+                characterUseCase()
+                    .cachedIn(viewModelScope)
+                    .collect {
+                        _characterFlow.value = it
+                    }
+            }
         }
 
         fun onQueryChange(newQuery: String) {
             _query.value = newQuery
-            loadCharacters()
-        }
-
-        private fun loadCharacters() {
-            viewModelScope.launch {
-                val response = charUseCase.invoke()
-                _characters.value = response //
-            }
+//        loadCharacters()
         }
     }

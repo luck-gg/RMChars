@@ -8,5 +8,5 @@ class CharacterUseCase
     constructor(
         private val rmRepository: RMRepository,
     ) {
-        suspend operator fun invoke() = rmRepository.getCharacters(page = 1)
+        operator fun invoke() = rmRepository.getCharacters()
     }
