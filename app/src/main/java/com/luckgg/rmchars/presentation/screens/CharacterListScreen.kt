@@ -69,33 +69,31 @@ fun CharacterScreen(
                 onQueryChange = { viewModel.onQueryChange(it) },
                 onSearchConfirm = { viewModel.fetchCharacters() },
             )
+
             Box(
                 modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center,
             ) {
-                if (charactersLazyItems.itemCount == 0) {
-                    Column(modifier = Modifier.fillMaxSize()) {
-                        LoadingIndicator(charactersLazyItems.itemCount == 0)
-                    }
-                } else {
-                    LazyColumn(
-                        state = rememberLazyListState(),
-                        modifier = Modifier.fillMaxSize(1f),
-                    ) {
-                        items(
-                            count = charactersLazyItems.itemCount,
-                            key = charactersLazyItems.itemKey(),
-                            contentType = charactersLazyItems.itemContentType(),
-                        ) { index ->
-                            charactersLazyItems[index]?.let { character ->
-                                CharacterRow(character) {
-                                    navController.currentBackStackEntry?.savedStateHandle?.set(
-                                        "character",
-                                        character,
-                                    )
-                                    navController.navigate(
-                                        Screen.CharacterDetailScreen.route,
-                                    )
-                                }
+                LoadingIndicator(charactersLazyItems.itemCount == 0)
+
+                LazyColumn(
+                    state = rememberLazyListState(),
+                    modifier = Modifier.fillMaxSize(1f),
+                ) {
+                    items(
+                        count = charactersLazyItems.itemCount,
+                        key = charactersLazyItems.itemKey(),
+                        contentType = charactersLazyItems.itemContentType(),
+                    ) { index ->
+                        charactersLazyItems[index]?.let { character ->
+                            CharacterRow(character) {
+                                navController.currentBackStackEntry?.savedStateHandle?.set(
+                                    "character",
+                                    character,
+                                )
+                                navController.navigate(
+                                    Screen.CharacterDetailScreen.route,
+                                )
                             }
                         }
                     }
