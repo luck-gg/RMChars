@@ -30,6 +30,7 @@ class RMRepositoryImpl
                             prefetchDistance = 50,
                             pageSize = 20,
                             initialLoadSize = 20,
+                            enablePlaceholders = true,
                         ),
                     remoteMediator =
                         CharacterRemoteMediator(

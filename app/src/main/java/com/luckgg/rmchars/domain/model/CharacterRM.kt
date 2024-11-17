@@ -1,5 +1,9 @@
 package com.luckgg.rmchars.domain.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class CharacterRM(
     val id: Int,
     val name: String,
@@ -11,4 +15,4 @@ data class CharacterRM(
     val url: String,
     val locationOrigin: String,
     val locationCurrent: String,
-)
+) : Parcelable
