@@ -13,6 +13,9 @@ interface CharacterDao {
     @Query("SELECT * FROM characterentity")
     fun pagingSource(): PagingSource<Int, CharacterEntity>
 
+    @Query("SELECT * FROM characterentity WHERE name LIKE '%' || :query || '%'")
+    fun getCharacterByName(query: String): PagingSource<Int, CharacterEntity>
+
     @Query("DELETE FROM characterentity")
     suspend fun clearAll()
 }

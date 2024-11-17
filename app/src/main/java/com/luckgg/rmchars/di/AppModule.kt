@@ -2,11 +2,11 @@ package com.luckgg.rmchars.di
 
 import android.content.Context
 import androidx.room.Room
-import com.luckgg.rmchars.data.local.CharacterDatabase
+import com.luckgg.rmchars.data.local.RepoDatabase
 import com.luckgg.rmchars.data.remote.api.RMApi
 import com.luckgg.rmchars.data.repository.RMRepositoryImpl
 import com.luckgg.rmchars.domain.repository.RMRepository
-import com.luckgg.rmchars.domain.usecase.CharacterUseCase
+import com.luckgg.rmchars.domain.usecase.FetchCharactersUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -46,22 +46,23 @@ object AppModule {
     @Singleton
     fun provideCharacterDatabase(
         @ApplicationContext context: Context,
-    ): CharacterDatabase =
+    ): RepoDatabase =
         Room
             .databaseBuilder(
                 context,
-                CharacterDatabase::class.java,
+                RepoDatabase::class.java,
                 "beers.db",
-            ).build()
+            ).fallbackToDestructiveMigration()
+            .build()
 
     @Provides
     @Singleton
     fun provideRMRepository(
-        database: CharacterDatabase,
+        database: RepoDatabase,
         api: RMApi,
     ): RMRepository = RMRepositoryImpl(database, api)
 
     @Provides
     @Singleton
-    fun provideRMCharacterUseCase(rmRepository: RMRepository): CharacterUseCase = CharacterUseCase(rmRepository)
+    fun provideRMCharacterUseCase(rmRepository: RMRepository) = FetchCharactersUseCase(rmRepository)
 }

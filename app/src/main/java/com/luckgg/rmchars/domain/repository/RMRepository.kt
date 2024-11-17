@@ -5,5 +5,5 @@ import com.luckgg.rmchars.domain.model.CharacterRM
 import kotlinx.coroutines.flow.Flow
 
 fun interface RMRepository {
-    fun getCharacters(characterName: String?): Flow<PagingData<CharacterRM>>
+    fun getCharacters(characterName: String): Flow<PagingData<CharacterRM>>
 }

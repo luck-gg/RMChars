@@ -1,27 +1,10 @@
 package com.luckgg.rmchars.data.mapper
 
 import com.luckgg.rmchars.data.local.CharacterEntity
+import com.luckgg.rmchars.data.local.RemoteKeys
 import com.luckgg.rmchars.data.remote.dto.CharacterDto
-import com.luckgg.rmchars.data.remote.response.CharacterApiResponse
+import com.luckgg.rmchars.data.remote.dto.KeysDto
 import com.luckgg.rmchars.domain.model.CharacterRM
-
-class CharacterMapper {
-    private fun mapToDomainCharacter(characterDTO: CharacterDto) =
-        CharacterRM(
-            id = characterDTO.id ?: 0,
-            name = characterDTO.name,
-            status = characterDTO.status,
-            species = characterDTO.species,
-            image = characterDTO.image.orEmpty(),
-            gender = characterDTO.gender.orEmpty(),
-            created = characterDTO.created.orEmpty(),
-            url = characterDTO.url.orEmpty(),
-            locationOrigin = characterDTO.locationOrigin.name,
-            locationCurrent = characterDTO.locationCurrent.name,
-        )
-
-    fun mapToDomainCharacter(characterRes: CharacterApiResponse) = characterRes.results.map { mapToDomainCharacter(it) }
-}
 
 fun CharacterDto.toCharacterEntity() =
     CharacterEntity(
@@ -50,4 +33,11 @@ fun CharacterEntity.toCharacter() =
         url = url,
         locationOrigin = locationOrigin,
         locationCurrent = locationCurrent,
+    )
+
+fun KeysDto.toKeysEntity() =
+    RemoteKeys(
+        repoId = 0L,
+        prevKey = prev,
+        nextKey = next,
     )

@@ -5,7 +5,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
-import com.luckgg.rmchars.data.local.CharacterDatabase
+import com.luckgg.rmchars.data.local.RepoDatabase
 import com.luckgg.rmchars.data.mapper.toCharacter
 import com.luckgg.rmchars.data.remote.CharacterRemoteMediator
 import com.luckgg.rmchars.data.remote.api.RMApi
@@ -18,16 +18,16 @@ import javax.inject.Inject
 class RMRepositoryImpl
     @Inject
     constructor(
-        private val database: CharacterDatabase,
+        private val database: RepoDatabase,
         private val api: RMApi,
     ) : RMRepository {
         @OptIn(ExperimentalPagingApi::class)
-        override fun getCharacters(characterName: String?): Flow<PagingData<CharacterRM>> {
+        override fun getCharacters(characterName: String): Flow<PagingData<CharacterRM>> {
             val pager =
                 Pager(
                     config =
                         PagingConfig(
-                            prefetchDistance = 10,
+                            prefetchDistance = 50,
                             pageSize = 20,
                             initialLoadSize = 20,
                         ),
@@ -38,7 +38,11 @@ class RMRepositoryImpl
                             characterName = characterName,
                         ),
                     pagingSourceFactory = {
-                        database.dao.pagingSource()
+                        if (characterName == "") {
+                            database.dao.pagingSource()
+                        } else {
+                            database.dao.getCharacterByName(characterName)
+                        }
                     },
                 )
             return pager.flow

@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.luckgg.rmchars.domain.model.CharacterRM
-import com.luckgg.rmchars.domain.usecase.CharacterUseCase
+import com.luckgg.rmchars.domain.usecase.FetchCharactersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -17,33 +17,30 @@ import javax.inject.Inject
 class CharacterViewModel
     @Inject
     constructor(
-        private val characterUseCase: CharacterUseCase,
+        private val fetchCharactersUseCase: FetchCharactersUseCase,
     ) : ViewModel() {
-        private val _characterFlow: MutableStateFlow<PagingData<CharacterRM>> = MutableStateFlow(PagingData.empty())
-        val characterFlow: StateFlow<PagingData<CharacterRM>> = _characterFlow
+        private val _characterUiState: MutableStateFlow<PagingData<CharacterRM>> =
+            MutableStateFlow(PagingData.empty())
+        val characterUiState: StateFlow<PagingData<CharacterRM>> = _characterUiState.asStateFlow()
 
         private val _query = MutableStateFlow("")
         val query: StateFlow<String> = _query.asStateFlow()
 
-        private val _characters = MutableStateFlow<List<CharacterRM>>(emptyList())
-        val characters: StateFlow<List<CharacterRM>> = _characters.asStateFlow()
-
         init {
-            loadCharacters()
+            fetchCharacters()
         }
 
-        private fun loadCharacters(newQuery: String? = null) {
+        fun fetchCharacters() {
             viewModelScope.launch {
-                characterUseCase(newQuery)
+                fetchCharactersUseCase(query.value)
                     .cachedIn(viewModelScope)
                     .collect {
-                        _characterFlow.value = it
+                        _characterUiState.value = it
                     }
             }
         }
 
         fun onQueryChange(newQuery: String) {
             _query.value = newQuery
-            loadCharacters(newQuery)
         }
     }

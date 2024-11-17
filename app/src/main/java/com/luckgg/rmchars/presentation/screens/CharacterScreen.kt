@@ -1,4 +1,5 @@
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -9,10 +10,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -34,10 +37,15 @@ import com.luckgg.rmchars.presentation.screens.CharacterViewModel
 @Composable
 fun CharacterScreen(viewModel: CharacterViewModel = hiltViewModel()) {
     val query by viewModel.query.collectAsState()
-    val charactersLazyItems: LazyPagingItems<CharacterRM> = viewModel.characterFlow.collectAsLazyPagingItems()
+    val charactersLazyItems: LazyPagingItems<CharacterRM> =
+        viewModel.characterUiState.collectAsLazyPagingItems()
 
     Column(modifier = Modifier.fillMaxSize()) {
-        SearchBar(query = query, onQueryChange = { viewModel.onQueryChange(it) })
+        SearchBar(
+            query = query,
+            onQueryChange = { viewModel.onQueryChange(it) },
+            onSearchConfirm = { viewModel.fetchCharacters() },
+        )
 
         LazyColumn(
             state = rememberLazyListState(),
@@ -62,17 +70,29 @@ fun CharacterScreen(viewModel: CharacterViewModel = hiltViewModel()) {
 fun SearchBar(
     query: String,
     onQueryChange: (String) -> Unit,
+    onSearchConfirm: (String) -> Unit, // New callback for confirmation
 ) {
-    TextField(
-        value = query,
-        onValueChange = onQueryChange,
+    Row(
         modifier =
             Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
-        label = { Text("Search characters") },
-        singleLine = true,
-    )
+        horizontalArrangement = Arrangement.SpaceBetween, // Arrange items horizontally
+    ) {
+        TextField(
+            value = query,
+            onValueChange = onQueryChange, // Updates the query state
+            modifier = Modifier.weight(1f), // Occupies most of the space
+            label = { Text("Search characters") },
+            singleLine = true,
+            keyboardActions = KeyboardActions(onDone = { onSearchConfirm(query) }), // Trigger search on Search action
+        )
+        Spacer(modifier = Modifier.width(8.dp)) // Add some space between TextField and Button
+        Button(onClick = { onSearchConfirm(query) }) {
+            // Confirmation button
+            Text("Search")
+        }
+    }
 }
 
 @Suppress("ktlint:standard:function-naming")
