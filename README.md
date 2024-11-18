@@ -9,18 +9,18 @@ Una aplicación móvil desarrollada en Kotlin que permite explorar y visualizar 
 
 ## Tecnologías utilizadas
 ### 📱 Presentación
-Jetpack Compose: Para construir una UI declarativa.
-MVVM (Model-View-ViewModel): Gestión de estado y comunicación entre capas.
-Jetpack Navigation: Manejo de navegación entre pantallas con parámetros.
+- Jetpack Compose: Para construir una UI declarativa.
+- MVVM (Model-View-ViewModel): Gestión de estado y comunicación entre capas.
+- Jetpack Navigation: Manejo de navegación entre pantallas con parámetros.
 ### 🗂 Dominio
 Implementación de casos de uso para desacoplar lógica empresarial de las capas de datos y presentación.
 ### 📦 Datos
-Retrofit: Para consumir el endpoint /characters de la API de Rick & Morty.
-Room: Para persistencia local de los datos y soporte offline.
-Paging 3: Manejo eficiente de grandes volúmenes de datos con soporte de paginación.
+- Retrofit: Para consumir el endpoint /characters de la API de Rick & Morty.
+- Room: Para persistencia local de los datos y soporte offline.
+- Paging 3: Manejo eficiente de grandes volúmenes de datos con soporte de paginación.
 ### 🔧 Otras tecnologías
-Dagger Hilt: Inyección de dependencias.
-Mockito: Pruebas unitarias.
+- Dagger Hilt: Inyección de dependencias.
+- Mockito: Pruebas unitarias.
 
 ## Estructura del proyecto
 📂 RMChars  
@@ -37,8 +37,6 @@ Mockito: Pruebas unitarias.
  │   ├── screens/           # Pantallas y componentes de Compose  
  │   └── navigation/        # Configuración de navegación  
  └── tests/                 # Pruebas unitarias con Mockito  
-
-/character
 
 ## Documentación oficial
 
