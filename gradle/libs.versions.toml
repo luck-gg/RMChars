@@ -32,6 +32,9 @@ pagingCommonAndroid = "3.3.2"
 roomPaging = "2.6.1"
 pagingRuntimeKtx = "3.3.4"
 pagingComposeVersion = "3.3.4"
+mockitoCore = "5.14.2"
+mockitoKotlin = "5.4.0"
+kotlinxCoroutinesTest = "1.9.0"
 
 [libraries]
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activityCompose" }
@@ -87,6 +90,9 @@ androidx-paging-common-android = { group = "androidx.paging", name = "paging-com
 androidx-room-paging = { group = "androidx.room", name = "room-paging", version.ref = "roomPaging" }
 androidx-paging-runtime-ktx = { group = "androidx.paging", name = "paging-runtime-ktx", version.ref = "pagingRuntimeKtx" }
 paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "pagingComposeVersion" }
+mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockitoCore" }
+mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockitoKotlin" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

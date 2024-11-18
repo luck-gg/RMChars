@@ -67,6 +67,9 @@ dependencies {
 
     // Room
     implementation(libs.androidx.room.ktx)
+    implementation(libs.mockito.core)
+    implementation(libs.mockito.kotlin)
+    testImplementation(libs.kotlinx.coroutines.test)
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.paging)
 
