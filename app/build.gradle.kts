@@ -67,8 +67,6 @@ dependencies {
 
     // Room
     implementation(libs.androidx.room.ktx)
-    implementation(libs.mockito.core)
-    implementation(libs.mockito.kotlin)
     testImplementation(libs.kotlinx.coroutines.test)
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.paging)
@@ -116,4 +114,6 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
+    implementation(libs.mockito.core)
+    implementation(libs.mockito.kotlin)
 }

@@ -1,7 +1,6 @@
 package com.luckgg.rmchars.data.remote
 
 import androidx.paging.ExperimentalPagingApi
-import androidx.paging.LoadState.Loading.endOfPaginationReached
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator

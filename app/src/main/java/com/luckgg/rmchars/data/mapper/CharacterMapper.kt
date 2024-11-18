@@ -1,9 +1,7 @@
 package com.luckgg.rmchars.data.mapper
 
 import com.luckgg.rmchars.data.local.CharacterEntity
-import com.luckgg.rmchars.data.local.RemoteKeys
 import com.luckgg.rmchars.data.remote.dto.CharacterDto
-import com.luckgg.rmchars.data.remote.dto.KeysDto
 import com.luckgg.rmchars.domain.model.CharacterRM
 
 fun CharacterDto.toCharacterEntity() =
@@ -33,11 +31,4 @@ fun CharacterEntity.toCharacter() =
         url = url,
         locationOrigin = locationOrigin,
         locationCurrent = locationCurrent,
-    )
-
-fun KeysDto.toKeysEntity() =
-    RemoteKeys(
-        repoId = 0L,
-        prevKey = prev,
-        nextKey = next,
     )
