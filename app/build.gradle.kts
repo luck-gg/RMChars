@@ -22,6 +22,7 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -67,7 +68,7 @@ dependencies {
 
     // Room
     implementation(libs.androidx.room.ktx)
-    testImplementation(libs.kotlinx.coroutines.test)
+    implementation(libs.androidx.junit.ktx)
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.paging)
 
@@ -109,11 +110,12 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
 
     // Unit Test
+    implementation(libs.mockito.core)
+    implementation(libs.mockito.kotlin)
     testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
-    implementation(libs.mockito.core)
-    implementation(libs.mockito.kotlin)
 }
