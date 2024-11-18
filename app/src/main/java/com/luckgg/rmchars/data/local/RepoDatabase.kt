@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 
 @Database(
     entities = [CharacterEntity::class],
-    version = 3,
+    version = 4,
 )
 abstract class RepoDatabase : RoomDatabase() {
     abstract val dao: CharacterDao

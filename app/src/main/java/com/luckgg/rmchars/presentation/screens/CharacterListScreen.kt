@@ -1,4 +1,5 @@
 import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -17,6 +19,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -30,6 +33,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -37,6 +41,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemContentType
 import androidx.paging.compose.itemKey
+import coil.compose.rememberAsyncImagePainter
 import com.luckgg.rmchars.domain.model.CharacterRM
 import com.luckgg.rmchars.presentation.components.LoadingIndicator
 import com.luckgg.rmchars.presentation.screens.CharacterViewModel
@@ -161,27 +166,39 @@ fun CharacterRow(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
-        Text(text = character.name, style = MaterialTheme.typography.headlineSmall)
-        Text(text = "ID: ${character.id}", style = MaterialTheme.typography.bodyLarge)
+        Column(modifier = Modifier.weight(0.2f)) {
+            Image(
+                painter = rememberAsyncImagePainter(character.image),
+                contentDescription = null,
+                modifier =
+                    Modifier
+                        .size(64.dp)
+                        .padding(horizontal = 12.dp),
+            )
+        }
+        Column(modifier = Modifier.weight(0.8f)) {
+            Text(text = character.name, style = MaterialTheme.typography.headlineSmall)
+            Text(text = "Species: ${character.species}", style = MaterialTheme.typography.bodyLarge)
+        }
     }
+    HorizontalDivider()
 }
 
-// @Suppress("ktlint:standard:function-naming")
-// @Preview(showBackground = true)
-// @Composable
-// fun CharacterRowPreview() {
-//    CharacterRow(
-//        CharacterRM(
-//            id = 1,
-//            name = "Rick Sanchez",
-//            status = "Alive",
-//            image = "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
-//            gender = "Male",
-//            species = "Human",
-//            locationOrigin = "Earth (C-137)",
-//            locationCurrent = "Citadel of Ricks",
-//            created = "",
-//            url = "",
-//        ),
-//    )
-// }
+@Suppress("ktlint:standard:function-naming")
+@Preview(showBackground = true)
+@Composable
+fun CharacterRowPreview() {
+    CharacterRow(
+        CharacterRM(
+            id = 1,
+            name = "Rick Sanchez",
+            status = "Alive",
+            image = "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
+            gender = "Male",
+            species = "Human",
+            locationOrigin = "Earth (C-137)",
+            locationCurrent = "Citadel of Ricks",
+        ),
+        onCharacterClick = {},
+    )
+}
