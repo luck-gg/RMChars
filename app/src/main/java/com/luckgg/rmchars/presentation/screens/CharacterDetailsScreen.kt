@@ -18,7 +18,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -42,7 +41,6 @@ fun CharacterDetailsScreen(navController: NavController) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(),
             )
         },
     ) { innerPadding ->
@@ -80,6 +78,7 @@ fun CharacterDetailsScreen(navController: NavController) {
     }
 }
 
+@Suppress("ktlint:standard:function-naming")
 @Composable
 fun CharacterDetailItem(
     label: String,

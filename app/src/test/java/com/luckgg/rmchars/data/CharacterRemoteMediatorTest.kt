@@ -44,11 +44,8 @@ class CharacterRemoteMediatorTest {
                     species = "mi",
                     image = "mutat",
                     gender = "noster",
-                    created = "conclusionemque",
-                    url = "https://duckduckgo.com/?q=maiorum",
                     locationOrigin = "disputationi",
                     locationCurrent = "ubique",
-                    type = "AA",
                 )
             val remoteMediator =
                 CharacterRemoteMediator(

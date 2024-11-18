@@ -1,4 +1,5 @@
 import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -28,6 +29,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -54,6 +56,7 @@ fun CharacterScreen(
     Scaffold(
         topBar = {
             TopAppBar(
+                modifier = Modifier.background(Color.Cyan),
                 title = { Text("Rick and Morty Characters") },
             )
         },

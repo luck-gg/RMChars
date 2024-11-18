@@ -11,8 +11,6 @@ data class CharacterRM(
     val species: String,
     val image: String,
     val gender: String,
-    val created: String,
-    val url: String,
     val locationOrigin: String,
     val locationCurrent: String,
 ) : Parcelable
