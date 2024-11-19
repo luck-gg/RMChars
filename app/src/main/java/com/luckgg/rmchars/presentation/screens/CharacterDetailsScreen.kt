@@ -67,7 +67,6 @@ fun CharacterDetailsScreen(navController: NavController) {
                     modifier = Modifier.padding(bottom = 8.dp),
                 )
 
-                // Rest of the details as secondary text
                 CharacterDetailItem(label = "Status:", value = it.status)
                 CharacterDetailItem(label = "Species:", value = it.species)
                 CharacterDetailItem(label = "Gender:", value = it.gender)
