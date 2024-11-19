@@ -69,6 +69,7 @@ dependencies {
     // Room
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.junit.ktx)
+    implementation(libs.androidx.constraintlayout.compose)
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.paging)
 

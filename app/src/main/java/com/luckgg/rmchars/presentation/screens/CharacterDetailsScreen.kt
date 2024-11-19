@@ -1,12 +1,7 @@
 package com.luckgg.rmchars.presentation.screens
 
-import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -19,9 +14,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.luckgg.rmchars.domain.model.CharacterRM
@@ -45,33 +40,88 @@ fun CharacterDetailsScreen(navController: NavController) {
         },
     ) { innerPadding ->
         character?.let {
-            Column(
+            ConstraintLayout(
                 modifier =
                     Modifier
                         .fillMaxSize()
                         .padding(innerPadding),
-                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
+                val (image, name, status, species, gender, origin, location) = createRefs()
                 Image(
                     painter = rememberAsyncImagePainter(model = it.image),
                     contentDescription = it.name,
                     modifier =
                         Modifier
                             .size(200.dp)
-                            .padding(16.dp),
+                            .constrainAs(image) {
+                                top.linkTo(parent.top, 16.dp)
+                                start.linkTo(parent.start)
+                                end.linkTo(parent.end)
+                            },
                 )
 
                 Text(
                     text = "${it.name} (ID: ${it.id})",
                     style = MaterialTheme.typography.headlineMedium,
-                    modifier = Modifier.padding(bottom = 8.dp),
+                    modifier =
+                        Modifier
+                            .constrainAs(name) {
+                                top.linkTo(image.bottom, 16.dp)
+                                start.linkTo(parent.start)
+                                end.linkTo(parent.end)
+                            },
                 )
 
-                CharacterDetailItem(label = "Status:", value = it.status)
-                CharacterDetailItem(label = "Species:", value = it.species)
-                CharacterDetailItem(label = "Gender:", value = it.gender)
-                CharacterDetailItem(label = "Original From:", value = it.locationOrigin)
-                CharacterDetailItem(label = "Current Location:", value = it.locationCurrent)
+                CharacterDetailItem(
+                    label = "Status:",
+                    value = it.status,
+                    modifier =
+                        Modifier.constrainAs(status) {
+                            top.linkTo(name.bottom, 8.dp)
+                            start.linkTo(parent.start)
+                            end.linkTo(parent.end)
+                        },
+                )
+                CharacterDetailItem(
+                    label = "Species:",
+                    value = it.species,
+                    modifier =
+                        Modifier.constrainAs(species) {
+                            top.linkTo(status.bottom, 8.dp)
+                            start.linkTo(parent.start)
+                            end.linkTo(parent.end)
+                        },
+                )
+                CharacterDetailItem(
+                    label = "Gender:",
+                    value = it.gender,
+                    modifier =
+                        Modifier.constrainAs(gender) {
+                            top.linkTo(species.bottom, 8.dp)
+                            start.linkTo(parent.start)
+                            end.linkTo(parent.end)
+                        },
+                )
+                CharacterDetailItem(
+                    label = "Original From:",
+                    value = it.locationOrigin,
+                    modifier =
+                        Modifier.constrainAs(origin) {
+                            top.linkTo(gender.bottom, 8.dp)
+                            start.linkTo(parent.start)
+                            end.linkTo(parent.end)
+                        },
+                )
+                CharacterDetailItem(
+                    label = "Current Location:",
+                    value = it.locationCurrent,
+                    modifier =
+                        Modifier.constrainAs(location) {
+                            top.linkTo(origin.bottom, 8.dp)
+                            start.linkTo(parent.start)
+                            end.linkTo(parent.end)
+                        },
+                )
             }
         }
     }
@@ -82,30 +132,35 @@ fun CharacterDetailsScreen(navController: NavController) {
 fun CharacterDetailItem(
     label: String,
     value: String,
+    modifier: Modifier = Modifier,
 ) {
-    Row(
-        modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 4.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceEvenly,
+    ConstraintLayout(
+        modifier = modifier,
     ) {
+        val (title, description) = createRefs()
         Text(
             text = label,
             style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.primary,
             modifier =
                 Modifier
-                    .weight(0.4f)
-                    .animateContentSize(),
+                    .constrainAs(title) {
+                        top.linkTo(parent.top)
+                        start.linkTo(parent.start)
+                        end.linkTo(description.start)
+                    },
         )
         Text(
             text = value,
-            style = MaterialTheme.typography.bodyLarge,
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier =
                 Modifier
-                    .weight(0.6f)
-                    .animateContentSize(),
+                    .constrainAs(description) {
+                        top.linkTo(parent.top)
+                        start.linkTo(title.end)
+                        end.linkTo(parent.end)
+                    },
         )
     }
 }
