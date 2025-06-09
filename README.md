@@ -5,8 +5,6 @@ Main List        | Detail
 ------------- |:-------------:
 ![alt text](https://github.com/luck-gg/RMChars/blob/main/Screenshot_1749506483.png "Main") | ![alt text](https://github.com/luck-gg/RMChars/blob/main/Screenshot_1749506488.png "Detail")
 
-![alt text][detail]
-
 ## Características
 - Lista de personajes: Explora personajes con soporte de paginación automática.
 - Detalle de personajes: Toca un personaje para ver detalles adicionales.
